@@ -45,9 +45,16 @@ def analyze_soundness(blocks: list) -> dict:
     avg_time = sum(deltas) / len(deltas)
     miners = {b["miner"] for b in blocks}
     diversity = len(miners)
+
+    # ✅ New: Compute fastest and slowest block intervals
+    fastest = min(deltas)
+    slowest = max(deltas)
+
     ok = avg_time < 20 and diversity > 1
     return {
         "average_block_time": round(avg_time, 2),
+        "fastest_block_time": fastest,
+        "slowest_block_time": slowest,
         "miner_diversity": diversity,
         "block_count": len(blocks),
         "soundness_ok": ok,
