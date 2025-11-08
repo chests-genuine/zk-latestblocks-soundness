@@ -20,20 +20,33 @@ This tool helps developers, researchers, and rollup operators (Aztec, Zama, etc.
    export RPC_URL=https://mainnet.infura.io/v3/YOUR_KEY
 
 ## Usage
-Analyze last 10 blocks:
+Basic analysis of latest 10 blocks:
    python app.py --count 10
 
-Check 50 blocks for consistency:
-   python app.py --count 50
+Check 25 blocks using a custom RPC:
+   python app.py --rpc https://arb1.arbitrum.io/rpc --count 25
 
-Use custom RPC:
-   python app.py --rpc https://arb1.arbitrum.io/rpc --count 20
+Output results as JSON (for monitoring systems):
+   python app.py --count 15 --json
 
-Output results as JSON:
-   python app.py --count 10 --json
+Increase timeout for slow RPC responses:
+   python app.py --count 15 --timeout 60
 
-Increase timeout for slow RPCs:
-   python app.py --count 10 --timeout 60
+Save output to a file for logging:
+   python app.py --count 20 --json > latest_blocks.json
+
+Compare block timings between two RPCs:
+   python app.py --rpc https://eth.llamarpc.com --count 20
+   python app.py --rpc https://base-mainnet.g.alchemy.com/v2/YOUR_KEY --count 20
+
+Monitor soundness daily via cron:
+   0 * * * * python /path/to/app.py --count 10 --json >> /var/log/block_soundness.log
+
+Use fewer blocks for quick checks (testnets):
+   python app.py --count 5
+
+Analyze many blocks for stability assessment:
+   python app.py --count 100
 
 ## Example Output
 🧱 Fetching 10 latest blocks...  
